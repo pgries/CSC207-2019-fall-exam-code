@@ -1,0 +1,16 @@
+Changes Made
+1. Collapsed Files and Directories lists inside of Dir to just a list<Node>
+    a. Changed the appropriate addFile/addDirectory to addNode
+    b. Changed getFile/getDir to getChildren which returns a List<Node>
+    c. Added method addNodes to add a list of nodes all at once
+2. Removed Observer from Node because Files are not Observers
+    a. Added Observer to Dir so that it can observe its children
+3. Removed changeSize from File because it is duplicate code from Node.serBytesSize
+4. Changed unnecessary public access modifiers to package-private
+5. Changes FileSystem.java to use the new API provided by Node.java
+    a. Changed the calls to addFile/addDir to addNode
+    b. Changed printTree to only iterate over nodes that are returned from getChildren()
+
+Note: Even though File is a duplicate of Node code-wise, we leave it as is to better follow the open/closed
+    design principle, as in the future, one might want to implement special features that are specific
+    to the File class such as setContents() or changeContents()

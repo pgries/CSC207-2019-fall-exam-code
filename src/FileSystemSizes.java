@@ -6,7 +6,7 @@ public abstract class FileSystemSizes {
     /**
      * Demonstrate the process of creating a few directories and files
      * and making a file system size tree.
-     * @param args
+     * @param args main args
      */
     public static void main(String[] args) {
 
@@ -17,20 +17,20 @@ public abstract class FileSystemSizes {
         Dir grandchild1 = new Dir("dirdir");
         File grandchild2 = new File("g1.txt", 20);
 
-        root.addDir(child1);
-        root.addDir(child2);
-        root.addFile(child3);
-        child2.addDir(grandchild1);
-        child2.addFile(grandchild2);
+        root.addNode(child1);
+        root.addNode(child2);
+        root.addNode(child3);
+        child2.addNode(grandchild1);
+        child2.addNode(grandchild2);
 
         System.out.println("--------------------------------");
         printTree(root, "");
         File newLeaf = new File("leaf.txt", 100);
-        grandchild1.addFile(newLeaf);
+        grandchild1.addNode(newLeaf);
 
         System.out.println("--------------------------------");
         printTree(root, "");
-        newLeaf.changeSize(200);
+        newLeaf.setByteSize(200);
 
         System.out.println("--------------------------------");
         printTree(root, "");
@@ -41,18 +41,14 @@ public abstract class FileSystemSizes {
      * @param node the root of the current subtree
      * @param indent the prefix of spaces to print before node
      */
-    public static void printTree(Node node, String indent) {
+    private static void printTree(Node node, String indent) {
         System.out.println(
                 String.format("%s %s %d bytes",
                         indent, node.getName(), node.getByteSize()));
 
         if (node instanceof Dir) {
             Dir d = (Dir) node;
-            for (Node child : d.getDirectories()) {
-                printTree(child, indent + "  ");
-            }
-
-            for (Node child : d.getFiles()) {
+            for (Node child : d.getChildren()) {
                 printTree(child, indent + "  ");
             }
         }
